@@ -6,14 +6,8 @@ if(pokemonListElement != null) {
   // fetch list fo pokemon from API
   const pokemonListUrl = `http://localhost:3000/data`;
 
-  fetch(pokemonListUrl, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-    .then(resp => resp.json())
-    .then(data => {
-      let pokemons = data;
+  function renderPokemons(data) {
+    let pokemons = data;
       pokemons.map((p) => {
         let cardType = p.type
           .map(t => {
@@ -35,5 +29,13 @@ if(pokemonListElement != null) {
         `;
         pokemonListElement.insertAdjacentHTML("beforeend", itemElementText);
       });
-  });
+  }
+
+  fetch(pokemonListUrl, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((resp) => resp.json())
+    .then((data) => renderPokemons(data));
 }
